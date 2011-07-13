@@ -88,15 +88,10 @@ if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   exit 1
 fi
 
-## debug: dump jar manifests
+## output jar names (debug)
 TARGET_DIRS=`find -name target`
-mkdir -p jar-dump
 for T in $TARGET_DIRS ; do
-    JARS=`find "$T" -name "*.jar"`
-    for J in $JARS ; do
-        echo "-----> Dumping $J"
-        (cd jar-dump && jar xf ../"$J" && cat META-INF/MANIFEST.MF)
-    done
+    find "$T" -name "*.jar"
 done
 
 # repack cache
