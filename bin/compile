@@ -88,6 +88,12 @@ if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   exit 1
 fi
 
+## output jar names (debug)
+TARGET_DIRS=`find -name target`
+for T in $TARGET_DIRS ; do
+    find "$T" -name "*.jar"
+done
+
 # repack cache
 mkdir -p $CACHE_DIR
 for DIR in ".ivy2" "$SBT_HOME" ; do
