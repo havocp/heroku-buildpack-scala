@@ -76,25 +76,14 @@ fi
 #for example if switching sbt version, or just updates to the script)
 cp $BIN_DIR/../opt/sbt-$SBT_VERSION .sbt/sbt
 
-## sbt seems to want a tmpdir, but /tmp isn't reliable? stuff
-## in there vanished midstream.
-SBT_TMPDIR="$BUILD_DIR/.sbt/tmp"
-# clean leftovers if a previous build failed
-/bin/rm -rf "$SBT_TMPDIR"
-# recreate tmpdir
-mkdir -p "$SBT_TMPDIR"
-
 # build app
 echo "-----> Building app with SBT"
 echo "-----> executing sbt $SBT_TASKS"
-java -Xmx1024M -Duser.home=$BUILD_DIR -Djava.io.tmpdir="$SBT_TMPDIR" -jar .sbt/$SBT_JAR $SBT_TASKS 2>&1 | sed -u 's/^/       /'
+java -Xmx1024M -Duser.home=$BUILD_DIR -jar .sbt/$SBT_JAR $SBT_TASKS 2>&1 | sed -u 's/^/       /'
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   echo " !     Failed to build app with SBT $SBT_VERSION"
   exit 1
 fi
-
-## clean tmpdir, before we copy cache
-/bin/rm -rf "$SBT_TMPDIR" # clean leftovers
 
 # repack cache
 mkdir -p $CACHE_DIR
