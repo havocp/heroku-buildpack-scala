@@ -4,6 +4,8 @@
 # fail fast
 set -e
 
+echo "-----> Building app with custom Typesafe buildpack"
+
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 . $BIN_DIR/common
 
