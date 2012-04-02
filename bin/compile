@@ -30,8 +30,9 @@ CACHED_DIRS="$SBT_USER_HOME/.ivy2 $SBT_BINDIR"
 for DIR in $CACHED_DIRS; do
   rm -rf $DIR
   if [ -d $CACHE_DIR/$DIR ]; then
+    echo "-----> Initializing $DIR from cache"
     mkdir -p $DIR
-    cp -r $CACHE_DIR/$DIR/.  $DIR
+    cp -r --verbose $CACHE_DIR/$DIR/.  $DIR
   fi
 done
 
